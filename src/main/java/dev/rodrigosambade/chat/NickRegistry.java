@@ -1,0 +1,3 @@
+package dev.rodrigosambade.chat;
+import java.util.*;import java.util.concurrent.*;
+public final class NickRegistry<T>{private final ConcurrentMap<String,T>clients=new ConcurrentHashMap<>();public boolean register(String nick,T value){String k=normalize(nick);return clients.putIfAbsent(k,value)==null;}public void remove(String nick,T value){clients.remove(normalize(nick),value);}public Collection<T>values(){return List.copyOf(clients.values());}public List<String>nicks(){return clients.keySet().stream().sorted().toList();}private String normalize(String n){if(n==null||n.isBlank())throw new IllegalArgumentException("nick");return n.trim().toLowerCase(Locale.ROOT);}}
